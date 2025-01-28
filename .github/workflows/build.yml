@@ -44,9 +44,12 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE/src
           chmod +x gradlew
-          ./gradlew make makePluginsJson
+          ./gradlew make makePluginsJson --warning-mode all
           cp **/build/*.cs3 $GITHUB_WORKSPACE/builds
           cp build/plugins.json $GITHUB_WORKSPACE/builds
+      
+      - name: Save build logs
+        run: ./gradlew build --warning-mode all > $GITHUB_WORKSPACE/builds/build_logs.txt
 
       - name: Push builds
         run: |
